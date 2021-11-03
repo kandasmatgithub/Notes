@@ -9,3 +9,5 @@
   When setting fs.nr_open, you should make sure that fs.file-max is significantly bigger than fs.nr_open
 
  **Processes and threads limit**
+ 
+ kernel.threads-max - Defines the system-wide maximum number of threads available to the kernel at one time
