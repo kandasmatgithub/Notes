@@ -1,6 +1,9 @@
 ## How to find the switch port and VLAN of a physical NIC using tcpdump
 
+**Run the below commands and look for Device-ID & Port-ID**
+
 ```
+# ifconfig en2 up
 # tcpdump -nn -v -i en2 -s 1500 -c 1 'ether[20:2] == 0x2000'
 tcpdump: WARNING: en2: no IPv4 address assigned
 tcpdump: listening on en2, link-type 1, capture size 1500 bytes
