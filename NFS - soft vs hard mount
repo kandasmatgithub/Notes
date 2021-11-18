@@ -1,0 +1,4 @@
+soft - It depends on usage and appetite for data loss.  If it’s read only, soft is better because it won’t hang if NFS fails.  If you don’t mind potentially having data loss and want availability, soft is better for the same reason. 
+
+hard - If you can’t lose writes to the NFS server, hard is required but the mount can hang in the event of NFS server loss (so df, ls etc will hang).
+
