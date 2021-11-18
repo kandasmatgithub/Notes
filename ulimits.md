@@ -2,6 +2,21 @@
 
   **nofile** (ulimit -Hn) - This limit determines the number of files any process on the system can have open
   
+### To find out the number of files opened by a specific user, use the below command
+
+```
+user=$1
+while true
+do
+  date
+  echo -n "### $user nofiles: "
+  lsof -a -u $user -d ^mem -d ^cwd -d ^rtd -d ^txt -d ^DEL|wc -l
+  echo "Sleeping for 2 seconds...."
+  echo
+  sleep 2
+  done
+```
+  
   **fs.nr_open** - Max number of file handles/descriptors a process can allocate.	1048576 (on some big systems too low)
   
   **fs.file-max** - Total number of open file handles allowed for entire system	Calculated dynamically based on system (and usually quite large)
