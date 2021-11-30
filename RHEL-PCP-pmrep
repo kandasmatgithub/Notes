@@ -324,3 +324,8 @@ fork = kernel.all.sysfork
 ```
 
 and run pmrep with the below options
+
+pmrep :sar-u
+pmrep :mem
+pmrep :nw-pkt
+pmrep: disk-iops
