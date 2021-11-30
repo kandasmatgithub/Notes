@@ -1,0 +1,326 @@
+Ceate the pmrep.conf file in the current directory with the below contents
+
+```
+#
+# pmrep configuration file
+#
+
+# General options
+[options]
+#version = 1
+#source = local:
+#output = stdout
+#derived = /path/derived.conf
+#header = yes
+#unitinfo = yes
+#globals = yes
+timestamp = yes
+#samples =
+#interval = 1s
+#delay = no
+#type = default
+#width =
+#precision = 3
+#delimiter =
+#extheader = no
+#repeat_header = 0
+#timefmt = %H:%M:%S
+#interpol = yes
+#count_scale = count
+#space_scale = kB
+#time_scale = sec
+##includedir =
+
+# Compact metric specifications are of form:
+#pcp.metric.name = label,instance(s),unit/scale,type,column-width
+
+# Global metrics are displayed as part of any set (unless disabled with -G)
+[global]
+#nproc = kernel.all.runnable
+#kernel.all.runnable = nproc,,,,
+
+# sar -w example
+[sar-w]
+header = yes
+unitinfo = no
+globals = no
+timestamp = yes
+interval = 1s
+type = default
+precision = 2
+sysfork = kernel.all.sysfork
+sysfork.label = proc/s
+sysfork.width = 11
+pswitch = kernel.all.pswitch
+pswitch.label = cswch/s
+pswitch.width = 8
+
+# sar -W example
+[sar-W]
+header = yes
+unitinfo = no
+globals = no
+timestamp = yes
+interval = 1s
+type = default
+precision = 2
+time_scale = s
+pswpin = mem.vmstat.pswpin
+pswpin.label = pswpin/s
+pswpin.width = 10
+pswpout = mem.vmstat.pswpout
+pswpout.label = pswpout/s
+pswpout.width = 10
+
+# vmstat example
+[vmstat]
+header = yes
+unitinfo = no
+globals = no
+timestamp = no
+interval = 1s
+type = default
+precision = 0
+repeat_header = 22
+proc.runq.runnable = r,,,,
+proc.runq.blocked = b,,,,
+swap.used = swpd,,,,
+mem.util.free = free,,,,8
+mem.util.bufmem = buff,,,,8
+allcache = mem.util.allcache
+allcache.label = cache
+allcache.formula = mem.util.cached + mem.util.slab
+allcache.width = 8
+swap.pagesin = si,,,,
+swap.pagesout = so,,,,
+mem.vmstat.pgpgin = bi,,,,6
+mem.vmstat.pgpgout = bo,,,,6
+kernel.all.intr = in,,,,6
+kernel.all.pswitch = cs,,,,6
+alluser = kernel.all.cpu.alluserp
+alluser.formula = 100 * (kernel.all.cpu.user + kernel.all.cpu.nice) / hinv.ncpu
+alluser.label = us
+sys = kernel.all.cpu.sysp
+sys.label = sy
+sys.formula = 100 * kernel.all.cpu.sys / hinv.ncpu
+idle = kernel.all.cpu.idlep
+idle.label = id
+idle.formula = 100 * kernel.all.cpu.idle / hinv.ncpu
+wtotal = kernel.all.cpu.wait.totalp
+wtotal.label =  wa
+wtotal.formula = 100 * kernel.all.cpu.wait.total / hinv.ncpu
+steal = kernel.all.cpu.stealp
+steal.label = st
+steal.formula = 100 * kernel.all.cpu.steal / hinv.ncpu
+
+[sar-u]
+unitinfo = no
+timestamp = yes
+interval = 1s
+precision = 2
+user = kernel.all.cpu.userp
+user.label = %%user
+user.width = 10
+user.formula = 100 * kernel.all.cpu.user / hinv.ncpu
+nice = kernel.all.cpu.nicep
+nice.width = 10
+nice.label = %%nice
+nice.formula = 100 * kernel.all.cpu.nice / hinv.ncpu
+sys = kernel.all.cpu.sysp
+sys.width = 10
+sys.label = %%sys
+sys.formula = 100 * kernel.all.cpu.sys / hinv.ncpu
+iowait = kernel.all.cpu.wait.totalp
+iowait.width = 10
+iowait.label = %%iowait
+iowait.formula = 100 * kernel.all.cpu.wait.total / hinv.ncpu
+steal = kernel.all.cpu.stealp
+steal.width = 10
+steal.label = %%steal
+steal.formula = 100 * kernel.all.cpu.steal / hinv.ncpu
+idle = kernel.all.cpu.idlep
+idle.width = 10
+idle.label = %%idle
+idle.formula = 100 * kernel.all.cpu.idle / hinv.ncpu
+
+[sar-q]
+unitinfo = no
+interval = 1s
+prr = proc.runq.runnable
+prr.label = runq-sz
+prr.width = 8
+pn = proc.nprocs
+pn.label = plist-sz
+pn.width = 8
+lavg = kernel.all.load
+lavg.label = ldavg
+lavg.width = 8
+
+[nw-pkt]
+unitinfo = no
+interval = 1s
+pck/in = network.interface.in.packets
+pck/in.label = pck/in
+err/in = network.interface.in.errors
+err/in.label = err/in
+drp/in = network.interface.in.drops
+drp/in.label = drp/in
+pck/out = network.interface.out.packets
+pck/out.label = pck/out
+err/out = network.interface.out.errors
+err/out.label = err/out
+drp/out = network.interface.out.drops
+drp/out.label = drp/out
+
+[nw-bw]
+unitinfo = no
+interval = 1s
+nii = network.interface.in.bytes
+nii.label = bytes/s in
+nio = network.interface.out.bytes
+nio.label = bytes/s out
+nit = network.interface.total.derivedbytes
+nit.label = bytes/s total
+nit.formula = network.interface.in.bytes + network.interface.out.bytes
+
+[nw-bw-mb]
+unitinfo = no
+interval = 1s
+nii = network.interface.in.bytes
+nii.label = MB/s in
+nii.unit = mb
+nio = network.interface.out.bytes
+nio.label = MB/s out
+nio.unit = mb
+nit = network.interface.total.derivedbytes
+nit.label = MB/s total
+nit.unit = mb
+nit.formula = network.interface.in.bytes + network.interface.out.bytes
+
+[disk-iops]
+unitinfo = no
+interval = 1s
+precision = 0
+disk.dev.read = riops,,,,
+disk.dev.write = wiops,,,,
+disk.dev.total = iops,,,,
+
+[disk-mbps]]
+unitinfo = no
+interval = 1s
+precision = 0
+disk.dev.read_bytes = rmbps,,mb,,
+disk.dev.write_bytes = wmbps,,mb,,
+disk.dev.total_bytes = mbps,,mb,,
+
+[disk-iops-plus]
+unitinfo = no
+interval = 1s
+precision = 0
+disk.dev.read = riops,,,,
+disk.dev.write = wiops,,,,
+disk.dev.total = iops,,,,
+dda = disk.dev.avactivep
+dda.label = %%busy
+dda.formula = 100 * disk.dev.avactive
+disk.dev.aveq = avque(req),,,,
+ddw = disk.dev.totalp
+ddw.label = avwait(req)
+ddw.formula = delta(disk.dev.total_rawactive) / delta(disk.dev.total)
+dds = disk.dev.total_bytesp
+dds.label = avrqsz(bytes)
+dds.formula = delta(disk.dev.total_bytes) / delta(disk.dev.total)
+disk.dev.read_merge = rd merged (req),,,,
+disk.dev.write_merge = wr merged (req),,,,
+
+[mem]
+unitinfo = no
+interval = 1s
+precision = 0
+frp = mem.util.free
+frp.label = free(mb)
+frp.width = 12
+frp.unit = mb
+buf = mem.util.bufmem
+buf.label = bufhead(mb)
+buf.width = 12
+buf.unit = mb
+cac = mem.util.cached
+cac.label = pagecache(mb)
+cac.width = 12
+cac.unit = mb
+kst = mem.util.kernelStack
+kst.label = kernelstack(mb)
+kst.width = 12
+kst.unit = mb
+slab = mem.util.slab
+slab.label = slab(mb)
+slab.width = 12
+slab.unit = mb
+pgt = mem.util.pageTables
+pgt.label = pagetables(mb)
+pgt.width = 12
+pgt.unit = mb
+map = mem.util.mapped
+map.label = mapped(mb)
+map.width = 12
+map.unit = mb
+anon = mem.util.anonpages
+anon.label = anon(mb)
+anon.width = 12
+anon.unit = mb
+shm = mem.util.shmem
+shm.label = shm(mb)
+shm.width = 12
+shm.unit = mb
+swap = swap.used
+swap.label = swapuse(mb)
+swap.width = 12
+swap.unit = mb
+hupf = mem.util.hugepagesFreep
+hupf.label = hugefree(mb)
+hupf.width = 12
+hupf.formula = (mem.util.hugepagesFree * hinv.hugepagesize) / (1024*1024*1024)
+hupu = mem.util.hugepagesUsedp
+hupu.label = hugeused(mb)
+hupu.width = 12
+hupu.formula = ((mem.util.hugepagesTotal - mem.util.hugepagesFree) * hinv.hugepagesize) / (1024*1024*1024)
+
+# An example metric set
+[example-1]
+timestamp = yes
+interval = 2s
+type = default
+space_scale = MB
+read = disk.all.read_bytes
+read.width = 6
+write = disk.all.write_bytes
+write.width = 6
+if = network.interface.total.bytes
+if.unit = kB
+if.width = 10
+
+# Another example set
+[example-2]
+width = 10
+space_scale = kB
+dpr_b = disk.partitions.read_bytes
+dpw_b = disk.partitions.write_bytes
+cached = mem.util.allcache
+cached.formula = mem.util.cached + mem.util.slab
+cached.label = mem_c
+
+# Zabbix integration example - metrics will be sent with "pcp." prefix
+[zabbix]
+output = zabbix
+globals = no
+zabbix_server = 192.168.122.100
+zabbix_host = Linux-test-VM2
+zabbix_interval = 1m
+interval = 10s
+free = mem.util.free
+util = mem.util.used
+fork = kernel.all.sysfork
+```
+
+and run pmrep with the below options
