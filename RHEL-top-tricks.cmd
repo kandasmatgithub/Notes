@@ -6,8 +6,9 @@ Tip 1
 1. While in the top screen, press f to get into the Fields Management options
 2. Use Up/Down arrow key to get to the field of interest and press right arrow to select it
 3. Once selected, Use Up/Down arrow key to move the field to the desired position and hit enter
-4. To change the sort field, move the cursor to the desired field and press s to sort by that
-5. Press q to exit out of the Fields Management options window
+4. Hit space bar to select the field (shown by an asterisk in the front) so that it will be included in the display
+5. To change the sort field, move the cursor to the desired field and press s to sort by that
+6. Press q to exit out of the Fields Management options window
 
 
 Fields Management for window 1:Def, whose current sort field is SWAP
