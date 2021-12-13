@@ -9,7 +9,7 @@ kubectl --kubeconfig=/etc/kubernetes/admin.conf get nodes
 export KUBECONFIG=/etc/kubernetes/admin.conf
 kubectl get nodes
 ```
-3. Placing the the copy of kubeconfig file in .kube dir in the users home directory. The file has to be named as config
+3. Placing the the copy of kubeconfig file in $HOME/.kube/config 
 ```
 cd /home/user1
 mkdir .kube
